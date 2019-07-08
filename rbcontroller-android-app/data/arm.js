@@ -249,17 +249,17 @@ Arm.prototype.handleButton = function(text) {
             if(this.animation !== null)
                  break;
             this.animation = new Animation(this);
-            this.animation.addFrame(145, -45, 200);
-            this.animation.addFrame(10.3, -50, 300);
+            this.animation.addFrame(145, -35, 600);
+            this.animation.addFrame(35, 19, 300);
             this.animation.start();
             break;
         case "EXTEND":
             if(this.animation !== null)
                  break;
             this.animation = new Animation(this);
-            this.animation.addFrame(140, -45, 200);
-            this.animation.addFrame(180, 18, 300);
-            this.animation.addFrame(130, 79, 300);
+            this.animation.addFrame(145, -35, 500);
+            this.animation.addFrame(200, 18, 200);
+            this.animation.addFrame(140, 79, 300);
             this.animation.start();
             break;
             break;
@@ -454,6 +454,27 @@ Bone.prototype.rotate = function(prev, rotAng) {
     return res;
 }
 
+Arm.prototype.fixBodyCollision = function() {
+    var base = this.bones[0];
+    var endBone = this.bones[this.bones.length-1];
+    base.relAngle = Math.min(Math.max(base.relAngle, base.relMin), base.relMax)
+    this.updateAngles(true);
+
+    while(this.isInBody(endBone.x, endBone.y)) {
+        var newang = clampAng(base.relAngle - 0.01);
+        if(newang > base.relMax || newang < base.relMin)
+            return;
+        base.relAngle = newang
+        this.updateAngles(true);
+    }
+}
+
+Arm.prototype.isInBody = function(x, y) {
+    return (Math.abs(x) <= this.BODY_RADIUS*this.unit &&
+         y >= this.ARM_BASE_HEIGHT*this.unit);
+}
+
+
 Arm.prototype.solve = function(targetX, targetY) {
     var prev = null;
     for(var i = 0; i < this.bones.length; ++i) {
@@ -468,6 +489,11 @@ Arm.prototype.solve = function(targetX, targetY) {
     } else {
         if(targetY > this.unit*(this.ARM_BASE_HEIGHT + this.BODY_HEIGHT))
             targetY = this.unit*(this.ARM_BASE_HEIGHT + this.BODY_HEIGHT);
+    }
+
+    if(targetX < 5*this.unit) {
+        targetY = 0;
+        targetX = 0;
     }
 
     var endX = prev.x;
@@ -531,6 +557,7 @@ Arm.prototype.solve = function(targetX, targetY) {
         var endToTargetX = (targetX-endX);
         var endToTargetY = (targetY-endY);
         if( endToTargetX*endToTargetX + endToTargetY*endToTargetY <= 10) {
+            this.fixBodyCollision();
             // We found a valid solution.
             return 1;
         }
@@ -540,6 +567,8 @@ Arm.prototype.solve = function(targetX, targetY) {
         if(!modifiedBones && Math.abs(rotAng)*curToEndMag > 0.000001)
             modifiedBones = true;
     }
+
+    this.fixBodyCollision();
 
     if(modifiedBones)
         return 0;
@@ -584,15 +613,6 @@ Arm.prototype.rotateArm = function(bones, idx, rotAng) {
 
         var nx = x + (Math.cos(angle) * b.length * this.unit);
         var ny = y + (Math.sin(angle) * b.length * this.unit);
-
-        // Limit under-robot positions
-        if(nx < this.unit*this.BODY_RADIUS) {
-            if(ny > this.unit*this.ARM_BASE_HEIGHT)
-                return 0;
-        } else {
-            if(ny > this.unit*(this.ARM_BASE_HEIGHT + this.BODY_HEIGHT))
-                return 0;
-        }
 
         if(i > 0) {
             var diff = angle - base.angle;
