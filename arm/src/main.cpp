@@ -20,7 +20,7 @@ void loop() {
         usleep(800000);
         rkArmMoveTo(200, 18);
         usleep(600000);
-        rkArmMoveTo(155, 79);
+        rkArmMoveTo(155, 67);
         usleep(600000);
     }
 
