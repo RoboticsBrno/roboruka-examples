@@ -73,7 +73,7 @@ void loop() {
         // DOPLŇ MĚ!! Dopište tuto část kódu, aby robot zatáčel
         // doprava pokud je pos > 0.25 :)
         // Následující řádek smaž.
-        #error "Je třeba dopsat kód! Nejprve Smaž tento řádek (s #error ...) a pak dopiš kód pro zatáčení doprava."
+        #warning "Je třeba dopsat kód! Nejprve Smaž tento řádek (s #warning ...) a pak dopiš kód pro zatáčení doprava."
     }
 
     usleep(10000); // mezi iteracemi čekáme 10ms == 10000us
