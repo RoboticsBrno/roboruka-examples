@@ -29,6 +29,7 @@ void setup() {
     cfg.wifi_name = "RukoKraj";
     cfg.wifi_password = "PlnoRukou";
 
+    cfg.motor_enable_failsafe = true;
     cfg.rbcontroller_app_enable = true;
     cfg.rbcontroller_message_callback = handleMessage;
     rkSetup(cfg);
