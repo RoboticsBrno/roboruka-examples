@@ -17,25 +17,25 @@ void loop() {
     // SW1: přesunout ruku před robota
     if(rkButtonIsPressed(1)) {
         rkArmMoveTo(150, -45);
-        usleep(800000);
+        delay(800);
         rkArmMoveTo(200, 18);
-        usleep(600000);
+        delay(600);
         rkArmMoveTo(155, 67);
-        usleep(600000);
+        delay(600);
     }
 
     // SW2: schovat ruku na robota
     if(rkButtonIsPressed(2)) {
         rkArmMoveTo(150, -45);
-        usleep(800000);
+        delay(800);
         rkArmMoveTo(45, 10);
-        usleep(600000);
+        delay(600);
     }
 
     // SW3: otevřít/zavřít prsty
     if(rkButtonIsPressed(3)) {
         rkLedBlue(!rkArmIsGrabbing());
         rkArmSetGrabbing(!rkArmIsGrabbing());
-        usleep(300000);
+        delay(300);
     }
 }

@@ -43,5 +43,5 @@ void loop() {
     // Send text to the android application
     rkControllerSendLog("Tick #%d, battery at %d%%, %dmv %d\n", gIter++, rkBatteryPercent(),
         rkBatteryVoltageMv(), rkButtonIsPressed(1));
-    sleep(1);
+    delay(1000);
 }
