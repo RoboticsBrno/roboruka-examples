@@ -14,27 +14,27 @@ void setup() {
 
 void loop() {
     // Obsah této metody se provádí neustále dokola
-    sleep(2);
+    delay(2000);
     rkLedRed(true);
 
     // Dopředu na 100%
     rkMotorsSetPower(100, 100);
-    sleep(2);
+    delay(2000);
 
     // Otočka na místě doprava
     rkMotorsSetPower(100, -100);
-    sleep(2);
+    delay(2000);
 
     // Otočka na místě doleva
     rkMotorsSetPower(-100, 100);
-    sleep(2);
+    delay(2000);
 
     // Dozadu
     rkMotorsSetPower(-100, -100);
-    sleep(2);
+    delay(2000);
 
     // Zastavit
     rkLedRed(false);
     rkMotorsSetPower(0, 0);
-    sleep(3);
+    delay(2000);
 }

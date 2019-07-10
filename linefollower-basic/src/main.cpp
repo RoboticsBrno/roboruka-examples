@@ -18,7 +18,7 @@ void loop() {
     // Obsah této metody se provádí neustále dokola
 
     if(rkButtonIsPressed(1)) {         // Tlačítko 1: Kalibruj senzory
-        usleep(500000);
+        delay(500);
         rkLineCalibrate();
     } else if(rkButtonIsPressed(2)) {  // Tlačítko 2: Sleduj čáru
         if(gFollowing) {
@@ -27,7 +27,7 @@ void loop() {
         } else {
             gFollowing = true;
         }
-        usleep(500000); // prodleva, abyste stihli uhnout rukou
+        delay(500); // prodleva, abyste stihli uhnout rukou
     }
 
     // Načti pozici čáry
