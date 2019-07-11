@@ -18,6 +18,9 @@ void loop() {
     if (rkButtonIsPressed(1, false)) {
         rkMotorsSetPower(100, 100);
     }
+    else if (rkButtonIsPressed(2, false)) {
+        rkMotorsSetPower(100, -100);
+    }
     else {
         rkMotorsSetPower(0, 0);
     }

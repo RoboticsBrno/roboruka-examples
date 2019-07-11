@@ -23,8 +23,8 @@ void handleMessage(const std::string& cmd, rbjson::Object *pkt) {
 
 void setup() {
     rkConfig cfg;
-    cfg.owner = "FrantaFlinta";
-    cfg.name = "SuperRuka";
+    cfg.owner = "Robotarna";
+    cfg.name = "Ruka1";
 
     cfg.wifi_name = "RukoKraj";
     cfg.wifi_password = "PlnoRukou";
