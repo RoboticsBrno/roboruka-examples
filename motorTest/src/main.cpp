@@ -6,22 +6,29 @@ void setup() {
     Serial.begin(115200);
     rkConfig cfg;
     // Upravte nastavení, například:
-    cfg.motor_max_power_pct = 60; // limit výkonu motorů na 30%
+    cfg.motor_max_power_pct = 40; // limit výkonu motorů na 40%
     rkSetup(cfg);
-
-    // Napište setup kód, provede se jednou po startu robota
-    rkLedBlue();
 }
 
 void loop() {
     rkLedBlue(false);
-    if (rkButtonIsPressed(1, false)) {
+    if (rkButtonIsPressed(2, false) && rkButtonIsPressed(3, false)) { // dozadu
+        rkMotorsSetPower(-100, -100);
+    } else if (rkButtonIsPressed(1, false)) { // dopředu
         rkMotorsSetPower(100, 100);
-    }
-    else if (rkButtonIsPressed(2, false)) {
+        rkLedBlue();
+        rkLedRed(0);
+    } else if (rkButtonIsPressed(2, false)) { // doleva
+        rkMotorsSetPower(-100, 100);
+        rkLedGreen();
+        rkLedRed(0);
+    } else if (rkButtonIsPressed(3, false)) { // doprava
         rkMotorsSetPower(100, -100);
-    }
-    else {
+        rkLedYellow();
+        rkLedRed(0);
+    } else {
         rkMotorsSetPower(0, 0);
+        rkLedAll(0);
+        rkLedRed(1);
     }
 }
