@@ -26,8 +26,13 @@ void setup() {
     cfg.owner = "FrantaFlinta";
     cfg.name = "SuperRuka";
 
+    // BUĎTO připojit na WiFi...
     cfg.wifi_name = "RukoKraj";
     cfg.wifi_password = "PlnoRukou";
+
+    // A NEBO vytvořit vlastní WiFi (odkomentovat další dva řádky)
+    //cfg.wifi_default_ap = true;
+    //cfg.wifi_ap_password = "flusflus";
 
     cfg.motor_enable_failsafe = true;
     cfg.rbcontroller_app_enable = true;
