@@ -1,8 +1,6 @@
-.pio
 .pioenvs
 .piolibdeps
 .vscode
 .last_uploadfs_sha1
-__pycache__
-*.pyc
+
 src/config.hpp
