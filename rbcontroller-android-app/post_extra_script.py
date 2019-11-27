@@ -21,7 +21,7 @@ def after_upload(source, target, env):
     dev_list = subprocess.check_output([ "pio", "device", "list", "--serial", "--json-output" ], env=env["ENV"])
     dev_list = json.loads(dev_list)
     for d in dev_list:
-        hasher.update(d.get("hwid", ""))
+        hasher.update(d.get("hwid", "").encode('UTF-8'))
 
     current_sha1 = hasher.hexdigest()
     if os.path.exists(".last_uploadfs_sha1"):
