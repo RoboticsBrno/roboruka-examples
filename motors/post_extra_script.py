@@ -3,15 +3,47 @@ import hashlib
 import subprocess
 import json
 import re
+import shutil
 
 Import("env", "projenv")
 
+def generate_amalgamations(source, target, env):
+    if not os.path.isdir("web"):
+        return
+
+    try:
+        os.mkdir("data", mode=0o755)
+    except FileExistsError:
+        pass
+
+    fn_re = re.compile(r"^[0-9]+_.+\.([^.]+)$")
+    to_combine = {}
+    for root, dirs, files in os.walk("web"):
+        for name in files:
+            m = fn_re.match(name)
+            path = os.path.join(root, name)
+            if not m:
+                shutil.copy(path, os.path.join("data", os.path.relpath(path, "web")))
+            else:
+                to_combine.setdefault(m.group(1), []).append(path)
+
+    for ext, files in to_combine.items():
+        files.sort(key=lambda p: os.path.basename(p))
+        dst_path = os.path.join("data", "combined." + ext)
+        print("Combining to %s:\n    %s" % (dst_path, "\n    ".join(files)))
+        with open(dst_path, "w") as dst:
+            for path in files:
+                 with open(path, "r") as src:
+                     shutil.copyfileobj(src, dst)
+                     dst.write("\n")
+env.AddPreAction("$BUILD_DIR/spiffs.bin", generate_amalgamations)
+
 def after_upload(source, target, env):
-    if not os.path.isdir("data"):
+    if not os.path.isdir("web"):
         return
 
     hasher = hashlib.sha1()
-    for root, dirs, files in os.walk("data"):
+    for root, dirs, files in os.walk("web"):
         dirs.sort()
         for name in sorted(files):
             with open(os.path.join(root, name), "rb") as f:
@@ -35,5 +67,4 @@ def after_upload(source, target, env):
         f.write(current_sha1)
 
     env.Execute("pio run -t uploadfs")
-
 env.AddPostAction("upload", after_upload)

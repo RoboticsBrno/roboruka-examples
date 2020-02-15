@@ -1,4 +1,5 @@
-"use strict";
+'use strict';
+
 var ge1doot = ge1doot || {};
 ge1doot.canvas = function(id) {
 	"use strict";
@@ -95,4 +96,10 @@ ge1doot.canvas = function(id) {
 		}
 	});
 	return canvas;
+}
+
+if(String.prototype.endsWith === undefined) {
+	String.prototype.endsWith = function(suffix) {
+		return this.indexOf(suffix, this.length - suffix.length) !== -1;
+	};
 }
