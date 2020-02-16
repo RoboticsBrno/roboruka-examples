@@ -13,7 +13,7 @@ def generate_amalgamations(source, target, env):
 
     try:
         os.mkdir("data", mode=0o755)
-    except FileExistsError:
+    except OSError:
         pass
 
     fn_re = re.compile(r"^[0-9]+_.+\.([^.]+)$")
