@@ -12,7 +12,7 @@ def generate_amalgamations(source, target, env):
         return
 
     try:
-        os.mkdir("data", mode=0o755)
+        os.mkdir("data", 0o755)
     except OSError:
         pass
 
@@ -49,6 +49,12 @@ def after_upload(source, target, env):
             with open(os.path.join(root, name), "rb") as f:
                 for chunk in iter(lambda: f.read(32787), b""):
                     hasher.update(chunk)
+
+    try:
+        with open("partitions.csv", "rb") as f:
+            hasher.update(f.read())
+    except OSError as e:
+        pass
 
     dev_list = subprocess.check_output([ "pio", "device", "list", "--serial", "--json-output" ], env=env["ENV"])
     dev_list = json.loads(dev_list)
