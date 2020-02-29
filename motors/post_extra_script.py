@@ -7,6 +7,8 @@ import shutil
 
 Import("env", "projenv")
 
+VERSION = 2 # increase to force spiffs flash
+
 def generate_amalgamations(source, target, env):
     if not os.path.isdir("web"):
         return
@@ -31,11 +33,11 @@ def generate_amalgamations(source, target, env):
         files.sort(key=lambda p: os.path.basename(p))
         dst_path = os.path.join("data", "combined." + ext)
         print("Combining to %s:\n    %s" % (dst_path, "\n    ".join(files)))
-        with open(dst_path, "w") as dst:
+        with open(dst_path, "wb") as dst:
             for path in files:
-                 with open(path, "r") as src:
+                 with open(path, "rb") as src:
                      shutil.copyfileobj(src, dst)
-                     dst.write("\n")
+                     dst.write(b"\n")
 env.AddPreAction("$BUILD_DIR/spiffs.bin", generate_amalgamations)
 
 def after_upload(source, target, env):
@@ -43,6 +45,8 @@ def after_upload(source, target, env):
         return
 
     hasher = hashlib.sha1()
+    hasher.update(str(VERSION).encode("utf-8"))
+
     for root, dirs, files in os.walk("web"):
         dirs.sort()
         for name in sorted(files):
@@ -69,8 +73,9 @@ def after_upload(source, target, env):
                 return
 
     print("SPIFFS data changed, running uploadfs target!")
-    with open(".last_uploadfs_sha1", "w") as f:
-        f.write(current_sha1)
 
     env.Execute("pio run -t uploadfs")
+
+    with open(".last_uploadfs_sha1", "w") as f:
+        f.write(current_sha1)
 env.AddPostAction("upload", after_upload)
