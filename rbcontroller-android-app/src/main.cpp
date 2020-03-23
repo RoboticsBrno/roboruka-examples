@@ -2,25 +2,6 @@
 
 #include "roboruka.h"
 
-void handleMessage(const std::string& cmd, rbjson::Object *pkt) {
-    if(cmd == "joy") {
-        const rbjson::Array *data = pkt->getArray("data");
-        if(data->size() >= 1) {
-            const rbjson::Object *joy = data->getObject(0);
-            int x = joy->getInt("x");
-            int y = joy->getInt("y");
-
-            rkMotorsJoystick(x, y);
-        }
-    } else if(cmd == "arm") {
-        const double x = pkt->getDouble("x");
-        const double y = pkt->getDouble("y");
-        rkArmMoveTo(x, y);
-    } else if(cmd == "grab") {
-        rkArmSetGrabbing(!rkArmIsGrabbing());
-    }
-}
-
 void setup() {
     rkConfig cfg;
     cfg.owner = "FrantaFlinta"; // Ujistěte se, že v aplikace RBcontrol máte nastavené stejné
@@ -43,8 +24,24 @@ void setup() {
 
     cfg.motor_enable_failsafe = true;
     cfg.rbcontroller_app_enable = true;
-    cfg.rbcontroller_message_callback = handleMessage;
     rkSetup(cfg);
+
+    UI.arm(0, 0, 12, 9, rkArmGetInfo())
+        .onPositionChanged([](Arm& arm) {
+            rkArmMoveTo(arm.getX(), arm.getY());
+        })
+        .onGrab([](Arm&) {
+            rkArmSetGrabbing(!rkArmIsGrabbing());
+        })
+        .finish();
+    
+    UI.joystick(6, 12, 5, 5, "blue")
+        .onPositionChanged([](Joystick& joy) {
+            rkMotorsJoystick(joy.getX(), joy.getY());
+        })
+        .finish();
+    
+    UI.commit();
 
     printf("%s's roboruka '%s' started!\n", cfg.owner, cfg.name);
 }
