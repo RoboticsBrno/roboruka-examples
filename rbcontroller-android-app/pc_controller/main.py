@@ -90,8 +90,13 @@ class RBSocket:
         self.sock.bind(('', 0))
         self.write_counter = 0
         self.read_counter = 0
+        self.last_possess = 0
 
     def send(self, msg):
+        if msg["c"] == "possess" and time.time() - self.last_possess > 2:
+            self.last_possess = time.time()
+            self.write_counter = 0
+            self.read_counter = 0
         msg["n"] = self.write_counter
         self.write_counter += 1
         msg = json.dumps(msg)
