@@ -2,7 +2,11 @@
 
 #include "roboruka.h"
 
-void setup() {
+#define GRIDUI_LAYOUT_DEFINITION
+#include "layout.h"
+
+void setup()
+{
     rkConfig cfg;
     cfg.owner = "FrantaFlinta"; // Ujistěte se, že v aplikace RBcontrol máte nastavené stejné
     cfg.name = "SuperRuka";
@@ -26,31 +30,31 @@ void setup() {
     cfg.rbcontroller_app_enable = true;
     rkSetup(cfg);
 
-    UI.arm(0, 0, 12, 9, rkArmGetInfo())
-        .onPositionChanged([](Arm& arm) {
+    auto builder = Layout.begin();
+    builder.Arm1
+        .onPositionChanged([](Arm &arm) {
             rkArmMoveTo(arm.getX(), arm.getY());
         })
-        .onGrab([](Arm&) {
+        .onGrab([](Arm &) {
             rkArmSetGrabbing(!rkArmIsGrabbing());
-        })
-        .finish();
-    
-    UI.joystick(6, 12, 5, 5, "blue")
-        .onPositionChanged([](Joystick& joy) {
+        });
+
+    builder.Joystick1
+        .onPositionChanged([](Joystick &joy) {
             rkMotorsJoystick(joy.getX(), joy.getY());
-        })
-        .finish();
-    
-    UI.commit();
+        });
+
+    builder.commit();
 
     printf("%s's roboruka '%s' started!\n", cfg.owner, cfg.name);
 }
 
 static int gIter = 0;
 
-void loop() {
+void loop()
+{
     // Send text to the android application
     rkControllerSendLog("Tick #%d, battery at %d%%, %dmv %d\n", gIter++, rkBatteryPercent(),
-        rkBatteryVoltageMv(), rkButtonIsPressed(1, false));
+                        rkBatteryVoltageMv(), rkButtonIsPressed(1, false));
     delay(1000);
 }
