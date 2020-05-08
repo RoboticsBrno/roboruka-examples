@@ -11,7 +11,7 @@ void setup()
     cfg.owner = "FrantaFlinta"; // Ujistěte se, že v aplikace RBcontrol máte nastavené stejné
     cfg.name = "SuperRuka";
 
-    // Ve výchozím lze WiFi na robotovi nastavit pomocí Android aplikace
+    // Ve výchozím stavu lze WiFi na robotovi nastavit pomocí Android aplikace
     // RBControl (verze 1.0 nebo novější) přes Bluetooth.
     // Robot si toto nastavení pamatuje, a znovu ho použije při dalším zapnutí.
 
@@ -33,7 +33,7 @@ void setup()
     auto builder = Layout.begin();
     builder.Arm1
         .onPositionChanged([](Arm &arm) {
-            rkArmMoveTo(arm.getX(), arm.getY());
+            rkArmMoveTo(arm.x(), arm.y());
         })
         .onGrab([](Arm &) {
             rkArmSetGrabbing(!rkArmIsGrabbing());
@@ -41,7 +41,7 @@ void setup()
 
     builder.Joystick1
         .onPositionChanged([](Joystick &joy) {
-            rkMotorsJoystick(joy.getX(), joy.getY());
+            rkMotorsJoystick(joy.x(), joy.y());
         });
 
     builder.commit();

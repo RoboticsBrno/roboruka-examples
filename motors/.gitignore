@@ -2,6 +2,7 @@
 .piolibdeps
 .vscode
 .last_uploadfs_sha1
+.gridui_uploadfs_sha1
 .gridui_mtime
 src/config.hpp
 data
