@@ -121,7 +121,7 @@ class RBSocket:
                 #print(msg)
                 if "n" in msg:
                     diff = self.read_counter - msg["n"]
-                    if diff > 0 and diff < 300:
+                    if msg["n"] != -1 and diff > 0 and diff < 25:
                         continue
                     self.read_counter = msg["n"]
                 self.server.send_message_to_all(json.dumps(msg))
