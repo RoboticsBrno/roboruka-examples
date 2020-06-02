@@ -17,10 +17,10 @@ static float gPreviousPos = 0.f;
 void loop() {
     // Obsah této metody se provádí neustále dokola
 
-    if(rkButtonIsPressed(1)) {         // Tlačítko 1: Kalibruj senzory
+    if(rkButtonIsPressed(1, true)) {         // Tlačítko 1: Kalibruj senzory
         delay(500);
         rkLineCalibrate();
-    } else if(rkButtonIsPressed(2)) {  // Tlačítko 2: Sleduj čáru
+    } else if(rkButtonIsPressed(2, true)) {  // Tlačítko 2: Sleduj čáru
         if(gFollowing) {
             rkMotorsSetPower(0, 0); // zastavit robota, aby přestal sledovat
             gFollowing = false;

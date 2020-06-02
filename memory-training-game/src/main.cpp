@@ -30,7 +30,7 @@ int state = 0;
 void loop() {
     if(state == 0) {
         // Čekáme na SW1
-        if(rkButtonIsPressed(1)) {
+        if(rkButtonIsPressed(1, true)) {
             // Vygenerujeme sekvenci náhodných čísel 1 až 3
             for(int s = 0; s < steps; ++s) {
                 sequence_template.push_back(random(1, 4)); // vrchní limit random() není včetně, proto 4 místo 3
@@ -56,7 +56,7 @@ void loop() {
         // Vyčítáme všechny tlačítka od 1 do 3 včetně
         for(int tl = 1; tl <= 3; ++tl) {
             // Jedno z nich (tl) je stisknuto
-            if(rkButtonIsPressed(tl)) {
+            if(rkButtonIsPressed(tl, true)) {
                 // Zapíšeme jeho id do uživatelské sekvence
                 sequence_user.push_back(tl);
 

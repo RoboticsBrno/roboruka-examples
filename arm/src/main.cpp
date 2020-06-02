@@ -15,7 +15,7 @@ void loop() {
     // Obsah této metody se provádí neustále dokola
 
     // SW1: přesunout ruku před robota
-    if(rkButtonIsPressed(1)) {
+    if(rkButtonIsPressed(1, true)) {
         rkArmMoveTo(150, -45);
         delay(800);
         rkArmMoveTo(200, 18);
@@ -25,7 +25,7 @@ void loop() {
     }
 
     // SW2: schovat ruku na robota
-    if(rkButtonIsPressed(2)) {
+    if(rkButtonIsPressed(2, true)) {
         rkArmMoveTo(150, -45);
         delay(800);
         rkArmMoveTo(45, 10);
@@ -33,7 +33,7 @@ void loop() {
     }
 
     // SW3: otevřít/zavřít prsty
-    if(rkButtonIsPressed(3)) {
+    if(rkButtonIsPressed(3, true)) {
         rkLedBlue(!rkArmIsGrabbing());
         rkArmSetGrabbing(!rkArmIsGrabbing());
         delay(300);

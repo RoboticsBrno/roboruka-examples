@@ -16,7 +16,7 @@ void setup() {
 void loop() {
     // Obsah této metody se provádí neustále dokola
 
-    if (rkButtonIsPressed(1, false)) { // Je tlačítko SW1 stisknuté?
+    if (rkButtonIsPressed(1)) { // Je tlačítko SW1 stisknuté?
         rkLedGreen(false);
         rkLedBlue(true);
     } else {
