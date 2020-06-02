@@ -31,7 +31,7 @@ void loop() {
     }
 
     // Načti pozici čáry
-    float pos = rkLinePosition();
+    float pos = rkLineGetPosition();
 
     // Rozsvítíme ledky podle toho, kde čára zrovna je
     int ledId = int(round((pos + 1.f)/2*3)); // převod z rozsahu <-1;1> na číslo od 0 do 3,
