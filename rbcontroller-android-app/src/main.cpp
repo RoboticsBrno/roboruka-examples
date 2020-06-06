@@ -32,15 +32,15 @@ void setup()
 
     auto builder = Layout.begin();
     builder.Arm1
-        .onPositionChanged([](Arm &arm) {
+        .onPositionChanged([&](Arm &arm) {
             rkArmMoveTo(arm.x(), arm.y());
         })
-        .onGrab([](Arm &) {
+        .onGrab([&](Arm &) {
             rkArmSetGrabbing(!rkArmIsGrabbing());
         });
 
     builder.Joystick1
-        .onPositionChanged([](Joystick &joy) {
+        .onPositionChanged([&](Joystick &joy) {
             rkMotorsJoystick(joy.x(), joy.y());
         });
 
