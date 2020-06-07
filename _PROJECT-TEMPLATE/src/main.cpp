@@ -1,5 +1,5 @@
-#include <Arduino.h>
 #include "roboruka.h"
+#include <Arduino.h>
 
 // Funkce setup se zavolá vždy po startu robota.
 void setup() {
@@ -9,5 +9,4 @@ void setup() {
     rkSetup(cfg);
 
     // Sem patří váš kód
-
 }

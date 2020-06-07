@@ -1,6 +1,5 @@
-#include <Arduino.h>
 #include "roboruka.h"
-
+#include <Arduino.h>
 
 void setup() {
     rkConfig cfg;
@@ -27,12 +26,12 @@ void setup() {
     // * 3: zkontrolujeme zadanou sekvenci a vyblikáme výsledek
     int state = 0;
 
-    while(true) {
-        if(state == 0) {
+    while (true) {
+        if (state == 0) {
             // Čekáme na SW1
-            if(rkButtonIsPressed(1, true)) {
+            if (rkButtonIsPressed(1, true)) {
                 // Vygenerujeme sekvenci náhodných čísel 1 až 3
-                for(int s = 0; s < steps; ++s) {
+                for (int s = 0; s < steps; ++s) {
                     sequence_template.push_back(random(1, 4)); // vrchní limit random() není včetně, proto 4 místo 3
                 }
 
@@ -40,10 +39,10 @@ void setup() {
                 rkLedBlue(false);
                 state = 1;
             }
-        } else if(state == 1) {
+        } else if (state == 1) {
             // Vyblikáme vzorovou sekvenci
             rkLedAll(false);
-            for(int i = 0; i < steps; ++i) {
+            for (int i = 0; i < steps; ++i) {
                 delay(400);
                 rkLedById(sequence_template[i]);
                 delay(400);
@@ -52,27 +51,27 @@ void setup() {
 
             // Přejdeme do dalšího stavu
             state = 2;
-        } else if(state == 2) {
+        } else if (state == 2) {
             // Vyčítáme všechny tlačítka od 1 do 3 včetně
-            for(int tl = 1; tl <= 3; ++tl) {
+            for (int tl = 1; tl <= 3; ++tl) {
                 // Jedno z nich (tl) je stisknuto
-                if(rkButtonIsPressed(tl, true)) {
+                if (rkButtonIsPressed(tl, true)) {
                     // Zapíšeme jeho id do uživatelské sekvence
                     sequence_user.push_back(tl);
 
                     // Zkontrolujeme, kolik uživatel zadal kroků
-                    if(sequence_user.size() >= steps) {
+                    if (sequence_user.size() >= steps) {
                         // Pokud dost, přejdeme do dalšího stavu
                         state = 3;
                         break;
                     }
                 }
             }
-        } else if(state == 3) {
+        } else if (state == 3) {
             // Kontrola sekvence, kterou zadal uživatel proti vzoru
             bool correct = true;
-            for(int s = 0; s < steps; ++s) {
-                if(sequence_template[s] != sequence_user[s]) {
+            for (int s = 0; s < steps; ++s) {
+                if (sequence_template[s] != sequence_user[s]) {
                     correct = false;
                     break;
                 }
@@ -80,8 +79,8 @@ void setup() {
 
             // Vyblikáme výsledek
             bool on = true;
-            for(int i = 0; i < 8; ++i) {
-                if(correct) {
+            for (int i = 0; i < 8; ++i) {
+                if (correct) {
                     rkLedGreen(on);
                 } else {
                     rkLedRed(on);
@@ -91,7 +90,7 @@ void setup() {
             }
 
             // Pro další hru zvýšíme obtížnost, přidáme další prvek do sekvence
-            if(correct) {
+            if (correct) {
                 steps += 1;
             }
 

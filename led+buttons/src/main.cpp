@@ -1,6 +1,5 @@
-#include <Arduino.h>
 #include "roboruka.h"
-
+#include <Arduino.h>
 
 void setup() {
     rkConfig cfg;
@@ -13,7 +12,7 @@ void setup() {
     rkLedRed(true);
     rkLedYellow(true);
 
-    while(true) {
+    while (true) {
         if (rkButtonIsPressed(1)) { // Je tlačítko SW1 stisknuté?
             rkLedGreen(false);
             rkLedBlue(true);
