@@ -46,7 +46,7 @@ void setup()
 
     builder.commit();
 
-    printf("%s's roboruka '%s' started!\n", cfg.owner, cfg.name);
+    fmt::print("{}'s roboruka '{}' started!\n", cfg.owner, cfg.name);
 }
 
 static int gIter = 0;
@@ -54,7 +54,7 @@ static int gIter = 0;
 void loop()
 {
     // Send text to the android application
-    rkControllerSendLog("Tick #%d, battery at %d%%, %dmv %d\n", gIter++, rkBatteryPercent(),
-                        rkBatteryVoltageMv(), rkButtonIsPressed(1));
+    rkControllerSendLog(fmt::format("Tick #{}, battery at {}%, {}mv\n",
+                        gIter++, rkBatteryPercent(), rkBatteryVoltageMv()));
     delay(1000);
 }
