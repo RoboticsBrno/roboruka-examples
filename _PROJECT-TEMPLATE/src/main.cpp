@@ -1,16 +1,13 @@
 #include <Arduino.h>
 #include "roboruka.h"
 
-
+// Funkce setup se zavolá vždy po startu robota.
 void setup() {
     rkConfig cfg;
     // Upravte nastavení, například:
     // cfg.motor_max_power_pct = 30; // limit výkonu motorů na 30%
     rkSetup(cfg);
 
-    // Napište setup kód, provede se jednou po startu robota
-}
+    // Sem patří váš kód
 
-void loop() {
-    // Obsah této metody se provádí neustále dokola
 }

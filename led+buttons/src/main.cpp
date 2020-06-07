@@ -8,19 +8,18 @@ void setup() {
     // cfg.motor_max_power_pct = 30; // limit výkonu motorů na 30%
     rkSetup(cfg);
 
-    // Napište setup kód, provede se jednou po startu robota
+    // Sem patří váš kód
+
     rkLedRed(true);
     rkLedYellow(true);
-}
 
-void loop() {
-    // Obsah této metody se provádí neustále dokola
-
-    if (rkButtonIsPressed(1)) { // Je tlačítko SW1 stisknuté?
-        rkLedGreen(false);
-        rkLedBlue(true);
-    } else {
-        rkLedGreen(true);
-        rkLedBlue(false);
+    while(true) {
+        if (rkButtonIsPressed(1)) { // Je tlačítko SW1 stisknuté?
+            rkLedGreen(false);
+            rkLedBlue(true);
+        } else {
+            rkLedGreen(true);
+            rkLedBlue(false);
+        }
     }
 }

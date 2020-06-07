@@ -47,14 +47,11 @@ void setup()
     builder.commit();
 
     fmt::print("{}'s roboruka '{}' started!\n", cfg.owner, cfg.name);
-}
 
-static int gIter = 0;
-
-void loop()
-{
-    // Send text to the android application
-    rkControllerSendLog(fmt::format("Tick #{}, battery at {}%, {}mv\n",
-                        gIter++, rkBatteryPercent(), rkBatteryVoltageMv()));
-    delay(1000);
+    for(int i = 0; true; ++i) {
+        // Send text to the android application
+        rkControllerSendLog(fmt::format("Tick #{}, battery at {}%, {}mv\n",
+                            i, rkBatteryPercent(), rkBatteryVoltageMv()));
+        delay(1000);
+    }
 }
