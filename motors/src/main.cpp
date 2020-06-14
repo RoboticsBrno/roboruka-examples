@@ -1,6 +1,5 @@
-#include <Arduino.h>
 #include "roboruka.h"
-
+#include <Arduino.h>
 
 void setup() {
     rkConfig cfg;
@@ -12,7 +11,7 @@ void setup() {
 
     rkLedBlue();
 
-    while(true) {
+    while (true) {
         delay(2000);
         rkLedRed(true);
 

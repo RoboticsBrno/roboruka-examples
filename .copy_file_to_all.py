@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import shutil
 import sys
 
 if __name__ == "__main__":
@@ -13,16 +14,23 @@ if __name__ == "__main__":
 
 
     tokens = source.split(os.sep, 1)
-    print(tokens)
     if len(tokens) != 2:
         raise Exception()
 
-    dest = tokens[1]
+    rel_path = tokens[1]
 
-    for fn in os.listdir("."):
-        if not os.path.isdir(fn) or fn.startswith(".") or fn == tokens[0]:
+    for example_dir in os.listdir("."):
+        if not os.path.isdir(example_dir) or example_dir.startswith(".") or example_dir == tokens[0]:
             continue
 
-        with open(source, "rb") as i:
-            with open(os.path.join(fn, dest), "wb") as o:
-                o.write(i.read())
+        dest_path = os.path.join(example_dir, rel_path)
+        dest_dir = os.path.dirname(dest_path)
+        if not os.path.isdir(dest_dir):
+            os.makedirs(dest_dir, 0o0755)
+
+        print(source, "->", dest_path)
+        
+        if os.path.isdir(source):
+            shutil.copytree(source, dest_path, symlinks=True, dirs_exist_ok=True)
+        else:
+            shutil.copy2(source, dest_path, follow_symlinks=False)

@@ -5,8 +5,7 @@
 #define GRIDUI_LAYOUT_DEFINITION
 #include "layout.h"
 
-void setup()
-{
+void setup() {
     rkConfig cfg;
     cfg.owner = "FrantaFlinta"; // Ujistěte se, že v aplikace RBcontrol máte nastavené stejné
     cfg.name = "SuperRuka";
@@ -32,15 +31,15 @@ void setup()
 
     auto builder = Layout.begin();
     builder.Arm1
-        .onPositionChanged([&](Arm &arm) {
+        .onPositionChanged([&](Arm& arm) {
             rkArmMoveTo(arm.x(), arm.y());
         })
-        .onGrab([&](Arm &) {
+        .onGrab([&](Arm&) {
             rkArmSetGrabbing(!rkArmIsGrabbing());
         });
 
     builder.Joystick1
-        .onPositionChanged([&](Joystick &joy) {
+        .onPositionChanged([&](Joystick& joy) {
             rkMotorsJoystick(joy.x(), joy.y());
         });
 
@@ -48,10 +47,10 @@ void setup()
 
     fmt::print("{}'s roboruka '{}' started!\n", cfg.owner, cfg.name);
 
-    for(int i = 0; true; ++i) {
+    for (int i = 0; true; ++i) {
         // Send text to the android application
         rkControllerSendLog(fmt::format("Tick #{}, battery at {}%, {}mv\n",
-                            i, rkBatteryPercent(), rkBatteryVoltageMv()));
+            i, rkBatteryPercent(), rkBatteryVoltageMv()));
         delay(1000);
     }
 }
