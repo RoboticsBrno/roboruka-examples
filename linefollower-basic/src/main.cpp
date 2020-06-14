@@ -65,10 +65,11 @@ void setup() {
                 rkMotorsSetPower(100, 100);
             }
 
-// Doprava
-// DOPLŇ MĚ!! Dopište tuto část kódu, aby robot zatáčel
-// doprava pokud je pos > 0.25 :)
-// Následující řádek smaž.
+            // Doprava
+            // DOPLŇ MĚ!! Dopište tuto část kódu, aby robot zatáčel
+            // doprava pokud je pos > 0.25 :)
+            // Následující řádek smaž.
+
 #warning "Je třeba dopsat kód! Nejprve Smaž tento řádek (s #warning ...) a pak dopiš kód pro zatáčení doprava."
         }
 
